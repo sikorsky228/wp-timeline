@@ -8,9 +8,12 @@ Version: 1.0
 Author URI: https://github.com/sikorsky228
 */
 
+
+//Styles and js
 function meta_styles()
 {
     wp_enqueue_style( 'ui-css', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css' );
+    wp_enqueue_style( 'custom-css', plugin_dir_url('/').'wp-timeline/assets/styles.css' );
 }
 add_action( 'admin_enqueue_scripts', 'meta_styles' );
 
@@ -20,6 +23,13 @@ function meta_scripts()
 
 }
 add_action( 'admin_enqueue_scripts', 'meta_scripts' );
+
+function meta_css()
+{
+    wp_enqueue_style( 'custom', plugin_dir_url('/').'wp-timeline/assets/styles.css' );
+}
+add_action( 'wp_enqueue_scripts', 'meta_css' );
+
 
 function dynamic_add_custom_box() {
     add_meta_box(
@@ -40,7 +50,7 @@ function dynamic_inner_custom_box($post) {
 
     //get the saved meta
     $stage = get_post_meta($post->ID,'stage',true);
-
+    if ($stage != ""){
     $c = 0;
     if ( count( $stage ) > 0 ) {
         foreach( $stage as $item ) {
@@ -61,6 +71,7 @@ function dynamic_inner_custom_box($post) {
             }
         }
     }
+    } else echo "Add you first timeline<br>";
 
     ?>
 
@@ -74,7 +85,7 @@ function dynamic_inner_custom_box($post) {
               $(this).datepicker();
           });
             var count = $('p#stageBlock').length;
-            $(".add").on ('click', function() {
+            $(".add").on('click', function() {
                 count = count + 1;
                 $('#here').append('<p id="stageBlock"> Дата проведення <input type="data" class="datepicker" name="stage['+count+'][date]" value="" />-- Статус : <select name="stage['+count+'][status]"><option value="sud">Суд</option><option value="sprava">Справу вiдкрито</option><option value="end">Закрито</option></select>-- Опис <textarea cols="50" name="stage['+count+'][info]"></textarea><span class="remove">Remove</span></p>');
                 return false;
@@ -110,6 +121,21 @@ function dynamic_save_postdata( $post_id ) {
 
     update_post_meta($post_id,'stage',$stage);
 }
+/* Add this function to view timeline in your template */
+function get_timeline(){
+
+$date_value = get_post_meta( get_the_ID(), 'stage', true );
+
+      echo "<div class='timeline'>";
+            foreach ($date_value as $items){
+              echo "<div class='line'>";
+              echo "<span class='date-block'>". $items['date']."</span>";
+              echo "<span class='status-block ".$items['status']."'></span>";
+              echo "<span class='info-block'>". $items['info']."</span>";
+              echo "</div>";
+            }
+      echo "</div>";
+  }
 
 add_action( 'add_meta_boxes', 'dynamic_add_custom_box' );
 add_action( 'save_post', 'dynamic_save_postdata' );

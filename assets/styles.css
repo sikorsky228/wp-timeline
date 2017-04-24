@@ -1,0 +1,92 @@
+/*admin styles*/
+
+textarea{
+  vertical-align: top;
+}
+
+.add,
+.remove{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/*end*/
+
+/*Frontend styles*/
+.timeline{
+  padding:20px;
+}
+.timeline .line{
+  width: 100%;
+  clear:both;
+  height:100px;
+}
+
+.timeline .line .date-block{
+  float:left;
+  width:30%;
+}
+
+.timeline .line .status-block{
+  float: left;
+  width: 25px;
+  border-radius: 50%;
+  height: 25px;
+  position: relative;
+
+  border:1px solid #ccc;
+}
+.timeline .line:first-child .status-block:before{
+  content: '';
+  position: absolute;
+  top:-10px;
+  left:50%;
+  width:1px;
+  height:10px;
+  background-color: #ccc;
+}
+
+.timeline .line:last-child .status-block:before{
+  content: '';
+  position: absolute;
+  bottom:-10px;
+  left:50%;
+  width:1px;
+  height:80px;
+  background-color: #ccc;
+}
+.timeline .line:first-child .status-block:after{
+  content: '';
+  position: absolute;
+  top:-10px;
+  left:8px;
+  width:10px;
+  height:1px;
+  background-color: #ccc;
+}
+.timeline .line:last-child .status-block:after{
+  content: '';
+  position: absolute;
+  bottom:-10px;
+  left:8px;
+  width:10px;
+  height:1px;
+  background-color: #ccc;
+}
+.timeline .line .status-block:before{
+  content: '';
+  position: absolute;
+  top: -75px;
+  left: 49%;
+  width: 1px;
+  height: 75px;
+  background-color: #ccc;
+}
+.timeline .line .status-block.sud{
+  border:1px solid #ccc;
+}
+
+.line .info-block{
+  float: left;
+  width: 60%;
+}
